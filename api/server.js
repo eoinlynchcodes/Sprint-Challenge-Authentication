@@ -15,8 +15,20 @@ server.use(express.json());
 server.use('/api/auth', authRouter);
 server.use('/api/jokes', authenticate, jokesRouter);
 
-server.get('/hi', (req,res) => {
+server.get('/', (req,res) => {
     res.status(200).json({message: 'Hello'})
 })
+
+// server.get('/all', (req, res) => {
+//     accountHelpers.findAll()
+//     .then(response =>{
+//         res.status(200).json(response)
+//     })
+//     .catch(error => {
+//         res.status(400).json(error);
+//     })
+// }) 
+
+
 
 module.exports = server;
