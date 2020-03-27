@@ -2,11 +2,13 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const AccountHelpers = require('../accounts/accounthelpers')
 
+router.get('/', (req, res) => {
+  res.status(200).json({ message: 'You are in auth router'})
+})
+
 router.post("/register", (req, res) => {
   // implement registration
-
   const { username, password } = req.body;
-
   const hashedPassword = bcrypt.hashSync(password, 6);
 
   AccountHelpers.add({
@@ -27,12 +29,11 @@ router.post("/login", (req, res) => {
   // implement login
 
   const { username, password } = req.body
-  AccountHelpers.findBy({username}).first()
+  AccountHelpers.findBy({ username }).first()
   .then(user => {
     if(user && bcrypt.compareSync(password, user.password)){
 
-      req.session.user = user
-
+      // req.session.user = user
       res.json({message: 'Yeah, you\'re in..'})
     } else {
       res.status(401).json({ message: 'Nah, not happening amigo...'})
